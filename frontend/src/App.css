@@ -1,0 +1,23 @@
+.app-container {
+  margin-top: 20px;
+}
+
+/* Floating Add Button (like Figma) */
+.fab-btn {
+  width: 60px;
+  height: 60px;
+  background: var(--purple);
+  color: white;
+  border-radius: 50%;
+  border: none;
+  font-size: 2rem;
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+}
+
+.fab-btn:hover {
+  background: var(--purple-light);
+}
