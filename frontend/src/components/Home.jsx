@@ -8,20 +8,28 @@ function Home() {
   const handleAdd = async (e) => {
     e.preventDefault();
     if (!type) return alert("Select Income or Expense first!");
+    if (!title || !amount) return alert("Enter title and amount!");
 
-    const response = await fetch("http://localhost:6000/add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, amount: Number(amount), type }),
-    });
+    try {
+      const response = await fetch("http://localhost:5000/add", { // PORT corrected to 5000
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, amount: Number(amount), type }),
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (data.success) {
-      alert("Added Successfully!");
-      setTitle("");
-      setAmount("");
-      setType("");
+      if (data.success) {
+        alert("Added Successfully!");
+        setTitle("");
+        setAmount("");
+        setType("");
+      } else {
+        alert("Error: " + data.message);
+      }
+    } catch (err) {
+      console.log(err);
+      alert("Something went wrong!");
     }
   };
 
@@ -30,11 +38,9 @@ function Home() {
       <h1>Expense Tracker</h1>
       <p>Track your income, expenses, and history easily!</p>
 
-      {/* Add Transaction Box */}
       <div style={{ width: "380px", margin: "40px auto", padding: "20px", background: "#222", borderRadius: "12px" }}>
         <h2>Add Transaction</h2>
 
-        {/* Income / Expense Selection */}
         <div style={{ display: "flex", justifyContent: "center", gap: "20px", marginBottom: "20px" }}>
           <button className="nav-btn" onClick={() => setType("income")}>Income</button>
           <button className="nav-btn" onClick={() => setType("expense")}>Expense</button>
@@ -56,9 +62,7 @@ function Home() {
             placeholder="Amount"
           />
 
-          <button className="submit-btn" type="submit">
-            Add
-          </button>
+          <button className="submit-btn" type="submit">Add</button>
         </form>
       </div>
     </div>

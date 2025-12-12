@@ -4,7 +4,7 @@ function History() {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:6000/history")
+    fetch("http://localhost:5000/history") // PORT corrected
       .then((res) => res.json())
       .then((data) => setList(data));
   }, []);
@@ -18,7 +18,7 @@ function History() {
           <h3>{item.title}</h3>
           <p>Amount: {item.amount}</p>
           <p>Type: {item.type}</p>
-          <p>Date: {item.date}</p>
+          <p>Date: {new Date(item.date).toLocaleString()}</p>
         </div>
       ))}
     </div>
